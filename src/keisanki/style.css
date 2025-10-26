@@ -206,3 +206,12 @@ body {
     letter-spacing: 3px;
 }
 
+.model {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    color: #555;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
