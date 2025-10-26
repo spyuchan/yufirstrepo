@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.calculator {
+    background: linear-gradient(145deg, #ffffff, #e8e8e8);
+    border-radius: 30px;
+    padding: 40px 30px;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    max-width: 450px;
+    width: 100%;
+}
+
+/* 8セグメント液晶表示部 */
+.display-container {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border-radius: 20px;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    box-shadow: 
+        inset 0 2px 10px rgba(0, 0, 0, 0.3),
+        0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid #1a252f;
+}
+
+.led-display {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    overflow-x: auto;
+}
+
+.led-digit {
+    position: relative;
+    width: 35px;
+    height: 60px;
+    background: #1a1a1a;
+    border-radius: 5px;
+}
+
+.led-digit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #2a2a2a;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.segment {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.05);
+    transition: none !important;
+    will-change: opacity, transform;
+}
+
+/* セグメントの形状 */
+.segment-a { top: 5%; left: 10%; width: 80%; height: 8%; border-radius: 3px; }
+.segment-b { top: 10%; left: 85%; width: 10%; height: 40%; border-radius: 3px; }
+.segment-c { top: 52%; left: 85%; width: 10%; height: 40%; border-radius: 3px; }
+.segment-d { top: 87%; left: 10%; width: 80%; height: 8%; border-radius: 3px; }
+.segment-e { top: 52%; left: 5%; width: 10%; height: 40%; border-radius: 3px; }
+.segment-f { top: 10%; left: 5%; width: 10%; height: 40%; border-radius: 3px; }
+.segment-g { top: 48%; left: 10%; width: 80%; height: 8%; border-radius: 3px; }
+
+/* アクティブなセグメント */
+.segment.active {
+    background: #ffd700;
+    box-shadow: 
+        0 0 10px #ffd700,
+        0 0 20px #ffd700,
+        0 0 30px #ffd700,
+        inset 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* ボタン部 */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    padding: 25px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #f5f5f5, #d0d0d0);
+    color: #333;
+    cursor: pointer;
+    transition: none !important;
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.2),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+    user-select: none;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    will-change: transform, box-shadow;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+    transform: translateY(3px) scale(0.98);
+    box-shadow: 
+        0 3px 8px rgba(0, 0, 0, 0.2),
+        inset 0 0 0 rgba(0, 0, 0, 0);
+    transition: none !important;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 24px rgba(0, 0, 0, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn.btn-0 {
+    grid-column: span 2;
+}
+
+.btn[data-value="1"] {
+    background: linear-gradient(145deg, #ff6b9d, #ff8ab5);
+    color: white;
+}
+
+.btn[data-value="2"] {
+    background: linear-gradient(145deg, #4facfe, #00f2fe);
+    color: white;
+}
+
+.btn[data-value="3"] {
+    background: linear-gradient(145deg, #43e97b, #38f9d7);
+    color: white;
+}
+
+.btn[data-value="4"] {
+    background: linear-gradient(145deg, #fa709a, #fee140);
+    color: white;
+}
+
+.btn[data-value="5"] {
+    background: linear-gradient(145deg, #30cfd0, #330867);
+    color: white;
+}
+
+.btn[data-value="6"] {
+    background: linear-gradient(145deg, #a8edea, #fed6e3);
+    color: #333;
+}
+
+.btn[data-value="7"] {
+    background: linear-gradient(145deg, #ff9a9e, #fecfef);
+    color: white;
+}
+
+.btn[data-value="8"] {
+    background: linear-gradient(145deg, #ffecd2, #fcb69f);
+    color: white;
+}
+
+.btn[data-value="9"] {
+    background: linear-gradient(145deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn[data-value="0"] {
+    background: linear-gradient(145deg, #ffd700, #ffed4e);
+    color: #333;
+}
+
+.btn.operator {
+    background: linear-gradient(145deg, #ff416c, #ff4b2b);
+    color: white;
+}
+
+.btn.equals {
+    background: linear-gradient(145deg, #ffd89b, #19547b);
+    color: white;
+    font-size: 32px;
+}
+
+.btn.clear {
+    background: linear-gradient(145deg, #ff6b6b, #ff8787);
+    color: white;
+}
+
+/* メーカー表示 */
+.brand {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 900;
+    color: #ff0000;
+    text-shadow: 
+        0 0 10px #ff0000,
+        0 0 20px #ff0000,
+        0 0 30px #ff0000,
+        2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 3px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 
+            0 0 10px #ff0000,
+            0 0 20px #ff0000,
+            0 0 30px #ff0000,
+            2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    to {
+        text-shadow: 
+            0 0 15px #ff0000,
+            0 0 30px #ff0000,
+            0 0 45px #ff0000,
+            2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+}
+
